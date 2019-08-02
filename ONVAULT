@@ -48,21 +48,27 @@ error () {
 no_proxy_old="$no_proxy"
 export no_proxy="$VAULT_HOST"
 
+log "In Julia's vault script"
 if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
   log "Downloading private keys..."
   tmp_vault=~/".vault-backup-$(date +%s)"
   mkdir $tmp_vault
+  log "made tmp vault directory at $tmp_vault"
+  log "VAULT_DIRS is $VAULT_DIRS"
   for vault_dir in $VAULT_DIRS; do
+    log "in for loop. $vault_dir"
     if [[ -e ~/.${vault_dir} ]]; then
       mv ~/.${vault_dir} ${tmp_vault}
     fi
     mkdir ~/.${vault_dir}
-
+    user=`whoami`
+    log "i am $user"
     curl -s "${VAULT_URI}/${vault_dir}.tgz" | tar -C ~/.${vault_dir}/ -zxf -
     chown -f `whoami` ~/.${vault_dir}/* || true
     chmod -f 600 ~/.${vault_dir}/* || true
 
     if [[ ${vault_dir} == bundle ]]; then
+      log "handling that nasty .bundle/config"
       # more special handling of that nasty .bundle/config file. We ONLY want to bring over credentials, but the format
       # for credentials is rather open-ended. Example: credentials for google.com would be stored as BUNDLE_GOOGLE__COM: "username:password"
       # We solve this by allowing for a VAULT_BUNDLE_CREDENTIALS environment varialbe that is a space-deliminted list
