@@ -79,7 +79,6 @@ if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
       log "bundle_config_filter is $bundle_config_filter"
       log "adding bundle_config_filter to /tmp/bundle_config"
       log "the contents of ~/.bundle are:"
-      ls -la ~/.bundle
       grep -- "---\|$bundle_config_filter" ~/.bundle/config > /tmp/bundle_config
       log "now moving /tmp/bundle_config to ~/.bundle/config"
       mv /tmp/bundle_config ~/.bundle/config
@@ -101,7 +100,9 @@ if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
   export no_proxy="$no_proxy_old"
 
   log "Executing command: $@"
-  $@
+  output=$@
+  log $output
+  $output
 
   log "Removing private keys..."
   for vault_dir in $VAULT_DIRS; do
