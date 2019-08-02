@@ -48,6 +48,7 @@ error () {
 no_proxy_old="$no_proxy"
 export no_proxy="$VAULT_HOST"
 
+log "using ONVAULT with updated logs :D"
 if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
   log "Downloading private keys..."
   tmp_vault=~/".vault-backup-$(date +%s)"
