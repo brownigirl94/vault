@@ -98,11 +98,11 @@ if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
 
   # restore 'no_proxy' for executing the actual command
   export no_proxy="$no_proxy_old"
-  log "have latest changes"
+  log "have latest changes 1:57pm"
   log "Executing command: $@"
-  export output=$@
+  "$@"
+  export output="$@"
   log "output is $output"
-  export $output
 
   log "Removing private keys..."
   for vault_dir in $VAULT_DIRS; do
