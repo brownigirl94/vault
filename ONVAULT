@@ -128,5 +128,5 @@ else
   error "  docker run --name vault -d${document_args} ${VAULT_IMAGE}"
   exit 1
 fi
-
+log "done removing private keys, exiting ONVAULT command"
 # vim: set ts=2 sw=2 tw=0 softtabstop=2 et :
