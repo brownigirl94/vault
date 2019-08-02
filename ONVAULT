@@ -80,7 +80,6 @@ if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
       log "adding bundle_config_filter to /tmp/bundle_config"
       log "the contents of ~/.bundle are:"
       ls -la ~/.bundle
-      cat ~/.bundle/config
       grep -- "---\|$bundle_config_filter" ~/.bundle/config > /tmp/bundle_config
       log "now moving /tmp/bundle_config to ~/.bundle/config"
       mv /tmp/bundle_config ~/.bundle/config
