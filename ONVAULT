@@ -49,6 +49,9 @@ no_proxy_old="$no_proxy"
 export no_proxy="$VAULT_HOST"
 
 log "using ONVAULT with updated logs :D"
+log "checking this VAULT_HOST: $VAULT_HOST at this port: $VAULT_PORT"
+
+log "checking this VAULT_URI: $VAULT_URI"
 if curl --connect-timeout 1 -s "${VAULT_URI}/_ping"; then
   log "Downloading private keys..."
   tmp_vault=~/".vault-backup-$(date +%s)"
